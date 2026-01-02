@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bx8bcvnimvrkd"]
+
+[ext_resource type="PackedScene" uid="uid://bmihmcgb0x7mn" path="res://Player/Staff.blend" id="1_jbd5i"]
+
+[node name="PlayerStaff" instance=ExtResource("1_jbd5i")]

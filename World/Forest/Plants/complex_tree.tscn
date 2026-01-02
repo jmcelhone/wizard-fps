@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc1bkc4v1xwga"]
+
+[ext_resource type="PackedScene" uid="uid://cqepfjh0tekm3" path="res://World/Forest/Plants/NeuTree4.blend" id="1_y3ios"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y3ios"]
+size = Vector3(1.75, 4.25, 1.25)
+
+[node name="ComplexTree" type="StaticBody3D"]
+
+[node name="Mesh" parent="." instance=ExtResource("1_y3ios")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.75, 0, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.125, 1.625, -0.125)
+shape = SubResource("BoxShape3D_y3ios")

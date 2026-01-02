@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dmps331t0u7s2"]
+
+[ext_resource type="PackedScene" uid="uid://vphb5dupvmog" path="res://World/Forest/Plants/Tree4.blend" id="1_23qxw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_23qxw"]
+size = Vector3(0.75, 2.75, 0.75)
+
+[node name="Tree" type="StaticBody3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_mask = 3
+
+[node name="Mesh" parent="." instance=ExtResource("1_23qxw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, -0.025, -1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("BoxShape3D_23qxw")

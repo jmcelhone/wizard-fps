@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvk6rkwhenn8m"]
+
+[ext_resource type="Script" uid="uid://cqwdvrn4y8t3o" path="res://Debug/fps_counter.gd" id="1_4r2gn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="FPSCounter" type="CanvasLayer"]
+script = ExtResource("1_4r2gn")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 24.0
+offset_bottom = 16.0
+theme_override_font_sizes/font_size = 10
+theme_override_styles/normal = SubResource("StyleBoxFlat_1bvp3")

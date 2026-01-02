@@ -1,0 +1,184 @@
+[gd_scene load_steps=18 format=3 uid="uid://5ig2b5iak4oa"]
+
+[ext_resource type="Texture2D" uid="uid://cnwr37yjx4n7y" path="res://World/Dungeon/floor.png" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://i8b8d0bb7q82" path="res://Player/player.tscn" id="1_ig7tw"]
+[ext_resource type="AudioStream" uid="uid://bqlfdabxmsi47" path="res://World/ambience.ogg" id="4_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://0a83eu1avycx" path="res://World/Dungeon/wall.png" id="4_lquwl"]
+[ext_resource type="PackedScene" uid="uid://bak8ltrhbmlv5" path="res://Utils/CSGStairMaker3D.tscn" id="5_lquwl"]
+[ext_resource type="PackedScene" uid="uid://dmps331t0u7s2" path="res://World/Forest/Plants/tree.tscn" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://cc1bkc4v1xwga" path="res://World/Forest/Plants/complex_tree.tscn" id="7_5vw27"]
+[ext_resource type="Texture2D" uid="uid://bf8sbl6wvkd3q" path="res://World/Forest/floor.png" id="7_272bh"]
+[ext_resource type="PackedScene" uid="uid://ccvxyy4bhxupv" path="res://Enemies/goblin.tscn" id="9_kek77"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+sky_horizon_color = Color(0.2152166, 0.24832791, 0.48293233, 1)
+sky_curve = 0.36934334
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_fj7yv"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_tlwt5"]
+background_mode = 2
+sky = SubResource("Sky_fj7yv")
+tonemap_mode = 2
+glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_temporal_reprojection_enabled = false
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3sb7"]
+albedo_texture = ExtResource("1_0xm2m")
+uv1_scale = Vector3(25, 25, 25)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7mycd"]
+albedo_texture = ExtResource("4_lquwl")
+uv1_scale = Vector3(5, 5, 5)
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+albedo_texture = ExtResource("4_lquwl")
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lquwl"]
+albedo_texture = ExtResource("4_lquwl")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_272bh"]
+albedo_texture = ExtResource("7_272bh")
+uv1_scale = Vector3(10, 10, 10)
+texture_filter = 0
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tlwt5")
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.3096876, 0.032802343, 18.615532)
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1bvp3")
+pitch_scale = 0.9
+autoplay = true
+bus = &"Ambience Inside"
+
+[node name="Dungeon" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.93083954, -0.47314453, 4.282917)
+use_collision = true
+size = Vector3(40.751663, 0.053710938, 35.411003)
+material = SubResource("StandardMaterial3D_f3sb7")
+
+[node name="Wall" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, -2)
+size = Vector3(11, 6, 1)
+material = SubResource("StandardMaterial3D_7mycd")
+
+[node name="Wall2" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.5, 2.5, 10)
+size = Vector3(11, 6, 1)
+material = SubResource("StandardMaterial3D_7mycd")
+
+[node name="Wall3" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2.5, 4)
+size = Vector3(1, 6, 13)
+material = SubResource("StandardMaterial3D_7mycd")
+
+[node name="Wall4" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.5, 2.5, 4)
+size = Vector3(1, 6, 13)
+material = SubResource("StandardMaterial3D_7mycd")
+
+[node name="Doorway" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.775, 4.25)
+operation = 2
+size = Vector3(1, 2.45, 1.5)
+material = SubResource("StandardMaterial3D_1bvp3")
+
+[node name="Cieling" type="CSGBox3D" parent="Dungeon"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 6, 4)
+size = Vector3(10, 1, 13)
+material = SubResource("StandardMaterial3D_lquwl")
+
+[node name="CSGStairMaker3D" parent="Dungeon" instance=ExtResource("5_lquwl")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.625, 2.4287095, 14.25)
+use_collision = true
+size = Vector3(7.75, 8, 4)
+num_stairs = 10
+
+[node name="Forest" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 39.25)
+
+[node name="Trees" type="Node3D" parent="Forest"]
+
+[node name="Tree" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0.1, 2.75)
+
+[node name="Tree2" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(-8.742278e-08, 0, 2, 0, 2, 0, -2, 0, -8.742278e-08, -3.75, -0.225, 2.75)
+
+[node name="Tree4" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(1.7320508, 0, 1, 0, 2, 0, -1, 0, 1.7320508, 1.75, 0, -2.5)
+
+[node name="Tree7" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(1.9318516, 0, -0.5176381, 0, 2, 0, 0.5176381, 0, 1.9318516, 4.75, 0, -2.5)
+
+[node name="Tree8" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(1.7320508, 0, 1, 0, 2, 0, -1, 0, 1.7320508, 4.75, 0, 0.25)
+
+[node name="Tree10" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(1.9318516, 0, -0.5176381, 0, 2, 0, 0.5176381, 0, 1.9318516, -3.25, 0, -2.25)
+
+[node name="Tree11" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(-0.5176381, 0, 1.9318516, 0, 2, 0, -1.9318516, 0, -0.5176381, -6.5, 0.05, -0.5)
+
+[node name="Tree14" parent="Forest/Trees" instance=ExtResource("6_7mycd")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 4, -0.175, 1.5)
+
+[node name="ComplexTree" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7920022, -0.07207894, -3.1188622)
+
+[node name="ComplexTree2" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(0.74999994, 0, -1.2990382, 0, 1.5, 0, 1.2990382, 0, 0.74999994, 2.2079978, -0.07207894, 2.3811378)
+
+[node name="ComplexTree3" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(0.7500002, 0, 1.2990384, 0, 1.5, 0, -1.2990384, 0, 0.7500002, -2.2920022, -0.07207894, 2.6311378)
+
+[node name="ComplexTree4" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(0.7500002, 0, 1.2990384, 0, 1.5, 0, -1.2990384, 0, 0.7500002, -6.042002, -0.07207894, -2.8688622)
+
+[node name="ComplexTree5" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -5.292002, -0.07207894, 2.3811378)
+
+[node name="ComplexTree6" parent="Forest/Trees" instance=ExtResource("7_5vw27")]
+transform = Transform3D(0.7071067, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.7071067, -6.792002, -0.07207894, 1.6311378)
+
+[node name="Floor" type="CSGBox3D" parent="Forest"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.375, 0)
+use_collision = true
+size = Vector3(15, 0.25, 8)
+material = SubResource("StandardMaterial3D_272bh")
+
+[node name="Goblin" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.5, -0.5, 4)
+
+[node name="Goblin2" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 8.5, -0.5, 4)
+
+[node name="Goblin3" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.25, -0.5, 4)
+
+[node name="Goblin4" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5, -0.5, 4)
+
+[node name="Goblin5" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5, -0.5, 5)

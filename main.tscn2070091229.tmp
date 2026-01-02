@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://5ig2b5iak4oa"]
+
+[ext_resource type="Texture2D" uid="uid://cnwr37yjx4n7y" path="res://World/Dungeon/floor.png" id="1_0xm2m"]
+[ext_resource type="PackedScene" uid="uid://i8b8d0bb7q82" path="res://Player/player.tscn" id="1_ig7tw"]
+[ext_resource type="AudioStream" uid="uid://bqlfdabxmsi47" path="res://World/ambience.ogg" id="4_1bvp3"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+sky_horizon_color = Color(0.2152166, 0.24832791, 0.48293233, 1)
+sky_curve = 0.36934334
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_fj7yv"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_tlwt5"]
+background_mode = 2
+sky = SubResource("Sky_fj7yv")
+tonemap_mode = 2
+glow_enabled = true
+volumetric_fog_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3sb7"]
+albedo_texture = ExtResource("1_0xm2m")
+uv1_scale = Vector3(25, 25, 25)
+texture_filter = 0
+
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+light_bake_mode = 1
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tlwt5")
+
+[node name="Player" parent="." instance=ExtResource("1_ig7tw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.309688, 0.032803774, 1.3655305)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.93083954, -0.47314453, 4.282917)
+use_collision = true
+size = Vector3(40.751663, 0.053710938, 35.411003)
+material = SubResource("StandardMaterial3D_f3sb7")
+
+[node name="Ambience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_1bvp3")
+pitch_scale = 0.9
+autoplay = true
+bus = &"Ambience Inside"

@@ -14,3 +14,13 @@ export_credentials.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Assets
+*.blend
+*.blend.import
+*.wav
+*.wav.import
+*.ogg
+*.ogg.import
+*.png
+*.png.import

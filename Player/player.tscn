@@ -1,0 +1,109 @@
+[gd_scene load_steps=12 format=3 uid="uid://i8b8d0bb7q82"]
+
+[ext_resource type="Script" uid="uid://b7ui1c1vad8q1" path="res://Player/player.gd" id="1_4flbx"]
+[ext_resource type="AudioStream" uid="uid://dsbqec0nfukv2" path="res://Player/SFX/jump_land.wav" id="2_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://chjrsd2c0glov" path="res://Player/Magic/fireball.tscn" id="2_k53q1"]
+[ext_resource type="AudioStream" uid="uid://dqv7ow8ov13gm" path="res://Player/SFX/jump.wav" id="3_btcbx"]
+[ext_resource type="PackedScene" uid="uid://bmihmcgb0x7mn" path="res://Player/Staff.blend" id="3_fhl08"]
+[ext_resource type="AudioStream" uid="uid://w83sc6j0atrg" path="res://Player/SFX/step.wav" id="4_gwnis"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fj7yv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlwt5"]
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_k53q1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k53q1"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_k53q1"]
+material = SubResource("StandardMaterial3D_k53q1")
+size = Vector2(0.5, 0.5)
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_4flbx")
+Fireball = ExtResource("2_k53q1")
+recoil_multiplier = 9.0
+metadata/_edit_group_ = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52090716, 0)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_fj7yv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52090716, 0)
+shape = SubResource("CapsuleShape3D_tlwt5")
+
+[node name="StairCollider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.5, -0.75)
+shape = SubResource("SeparationRayShape3D_k53q1")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1839535, 0)
+metadata/_edit_group_ = true
+
+[node name="Face" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, -0.29734683, -0.5136217)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_k53q1")
+skeleton = NodePath("../..")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.28156018)
+
+[node name="ProjectileMarker" type="Marker3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+
+[node name="ColorRect" type="ColorRect" parent="Head/Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -6.0
+offset_right = 0.5
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Head/Camera3D"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -1.0
+offset_right = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+mouse_filter = 1
+color = Color(0, 0, 0, 1)
+
+[node name="Staff" parent="Head" instance=ExtResource("3_fhl08")]
+transform = Transform3D(0.86602545, -0.50000006, 0, 0.50000006, 0.86602545, 0, 0, 0, 1, 1, -1.5, -1)
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="JumpLandSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("2_4ntmi")
+bus = &"PlayerSFX"
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_btcbx")
+bus = &"PlayerSFX"
+
+[node name="StepSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_gwnis")
+bus = &"PlayerSFX"
+
+[node name="FireballTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true

@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://i8b8d0bb7q82"]
+
+[ext_resource type="Script" uid="uid://b7ui1c1vad8q1" path="res://Player/player.gd" id="1_4flbx"]
+[ext_resource type="AudioStream" uid="uid://dsbqec0nfukv2" path="res://Player/SFX/jump_land.wav" id="2_4ntmi"]
+[ext_resource type="PackedScene" uid="uid://chjrsd2c0glov" path="res://Player/Magic/fireball.tscn" id="2_k53q1"]
+[ext_resource type="AudioStream" uid="uid://dqv7ow8ov13gm" path="res://Player/SFX/jump.wav" id="3_btcbx"]
+[ext_resource type="AudioStream" uid="uid://w83sc6j0atrg" path="res://Player/SFX/step.wav" id="4_gwnis"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_fj7yv"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tlwt5"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_4flbx")
+Fireball = ExtResource("2_k53q1")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52090716, 0)
+cast_shadow = 0
+mesh = SubResource("CapsuleMesh_fj7yv")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.52090716, 0)
+shape = SubResource("CapsuleShape3D_tlwt5")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1839535, 0)
+metadata/_edit_group_ = true
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.28156018)
+
+[node name="ProjectileMarker" type="Marker3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.96412253)
+
+[node name="SFX" type="Node3D" parent="."]
+
+[node name="JumpLandSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("2_4ntmi")
+bus = &"PlayerSFX"
+
+[node name="JumpSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("3_btcbx")
+bus = &"PlayerSFX"
+
+[node name="StepSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("4_gwnis")
+bus = &"PlayerSFX"
+
+[node name="FireballTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]

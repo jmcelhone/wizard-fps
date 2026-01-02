@@ -1,0 +1,177 @@
+[gd_scene load_steps=24 format=3 uid="uid://chjrsd2c0glov"]
+
+[ext_resource type="Script" uid="uid://dw8iv4wnphx5q" path="res://Player/Magic/fireball.gd" id="1_158m7"]
+[ext_resource type="AudioStream" uid="uid://bs4ldq1ixv6wu" path="res://Player/Magic/fireball.wav" id="2_1412a"]
+[ext_resource type="Texture2D" uid="uid://1wj1d5li7b5v" path="res://Player/Magic/smoke_particle.png" id="3_h3alg"]
+[ext_resource type="AudioStream" uid="uid://eknlo2kh24mh" path="res://Player/Magic/pre-fireball.wav" id="4_ntpkh"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1412a"]
+bounce = 0.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_njn16"]
+albedo_color = Color(0.9880443, 0.3881984, 0, 1)
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 9.99
+
+[sub_resource type="SphereMesh" id="SphereMesh_ndey2"]
+material = SubResource("StandardMaterial3D_njn16")
+radius = 0.125
+height = 0.25
+radial_segments = 12
+rings = 8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7tjqq"]
+radius = 0.3628593
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ntpkh"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_h3alg")
+emission_enabled = true
+emission = Color(0.5466527, 0.28427482, 0.009127515, 1)
+emission_energy_multiplier = 4.0
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_h3alg"]
+offsets = PackedFloat32Array(0, 0.8018868, 0.9716981)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ntpkh"]
+gradient = SubResource("Gradient_h3alg")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mgkwv"]
+emission_shape_scale = Vector3(0.25, 0.25, 0.25)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 2, 0)
+color_ramp = SubResource("GradientTexture1D_ntpkh")
+
+[sub_resource type="QuadMesh" id="QuadMesh_o22w4"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_h3alg"]
+load_path = "res://.godot/imported/smoke_particle.png-f42beb78ce073fd8b1938cfdf18a4ff7.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mgkwv"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.89729005, 0, 0.06912586, 1)
+albedo_texture = SubResource("CompressedTexture2D_h3alg")
+emission_enabled = true
+emission = Color(0.36425266, 0, 0.025023682, 1)
+emission_energy_multiplier = 4.0
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_o22w4"]
+offsets = PackedFloat32Array(0, 0.8018868, 0.9716981)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ddqjl"]
+gradient = SubResource("Gradient_o22w4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wdnht"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 2, 0)
+scale_min = 0.0
+color_ramp = SubResource("GradientTexture1D_ddqjl")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h3alg"]
+transparency = 1
+albedo_texture = ExtResource("3_h3alg")
+emission = Color(0.5466527, 0.28427482, 0.009127515, 1)
+emission_energy_multiplier = 4.0
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_ntpkh"]
+offsets = PackedFloat32Array(0, 0.6981132, 0.9716981)
+colors = PackedColorArray(0, 0, 0, 0, 0.36738303, 0.34238032, 0.36978856, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mgkwv"]
+gradient = SubResource("Gradient_ntpkh")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o22w4"]
+emission_shape_scale = Vector3(0.5, 0.5, 0.5)
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 5, 0)
+color_ramp = SubResource("GradientTexture1D_mgkwv")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ntpkh"]
+size = Vector3(1.5, 1.5, 1.5)
+
+[node name="Fireball" type="RigidBody3D"]
+collision_layer = 2
+physics_material_override = SubResource("PhysicsMaterial_1412a")
+gravity_scale = 0.0
+lock_rotation = true
+continuous_cd = true
+script = ExtResource("1_158m7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_ndey2")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+visible = false
+shape = SubResource("SphereShape3D_7tjqq")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.9999996, 0.45418304, 0.03139973, 1)
+light_energy = 10.0
+omni_range = 3.0
+
+[node name="DeathTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="ParticleTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[node name="Sound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_1412a")
+attenuation_filter_cutoff_hz = 15144.0
+
+[node name="Pre-Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ntpkh")
+volume_db = 15.0
+
+[node name="Particles" type="Node3D" parent="."]
+
+[node name="OrangeParticles" type="GPUParticles3D" parent="Particles"]
+material_override = SubResource("StandardMaterial3D_ntpkh")
+amount = 20
+lifetime = 0.25
+process_material = SubResource("ParticleProcessMaterial_mgkwv")
+draw_pass_1 = SubResource("QuadMesh_o22w4")
+
+[node name="RedParticles" type="GPUParticles3D" parent="Particles"]
+material_override = SubResource("StandardMaterial3D_mgkwv")
+transparency = 0.2
+amount = 10
+lifetime = 0.25
+process_material = SubResource("ParticleProcessMaterial_wdnht")
+draw_pass_1 = SubResource("QuadMesh_o22w4")
+
+[node name="SmokeParticles" type="GPUParticles3D" parent="Particles"]
+material_override = SubResource("StandardMaterial3D_h3alg")
+amount = 2
+lifetime = 0.25
+process_material = SubResource("ParticleProcessMaterial_o22w4")
+draw_pass_1 = SubResource("QuadMesh_o22w4")
+
+[node name="Hitbox" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 32
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_ntpkh")
+debug_color = Color(0.9986848, 0, 0.14743617, 0.41960785)
