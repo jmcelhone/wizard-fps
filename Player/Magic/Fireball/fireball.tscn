@@ -1,9 +1,9 @@
 [gd_scene load_steps=24 format=3 uid="uid://chjrsd2c0glov"]
 
-[ext_resource type="Script" uid="uid://dw8iv4wnphx5q" path="res://Player/Magic/fireball.gd" id="1_158m7"]
-[ext_resource type="AudioStream" uid="uid://bs4ldq1ixv6wu" path="res://Player/Magic/fireball.wav" id="2_1412a"]
-[ext_resource type="Texture2D" uid="uid://1wj1d5li7b5v" path="res://Player/Magic/smoke_particle.png" id="3_h3alg"]
-[ext_resource type="AudioStream" uid="uid://eknlo2kh24mh" path="res://Player/Magic/pre-fireball.wav" id="4_ntpkh"]
+[ext_resource type="Script" uid="uid://dw8iv4wnphx5q" path="res://Player/Magic/Fireball/fireball.gd" id="1_158m7"]
+[ext_resource type="AudioStream" uid="uid://bs4ldq1ixv6wu" path="res://Player/Magic/Fireball/fireball.wav" id="2_1412a"]
+[ext_resource type="Texture2D" uid="uid://1wj1d5li7b5v" path="res://Player/Magic/Fireball/smoke_particle.png" id="3_h3alg"]
+[ext_resource type="AudioStream" uid="uid://eknlo2kh24mh" path="res://Player/Magic/Fireball/pre-fireball.wav" id="4_ntpkh"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_1412a"]
 bounce = 0.8

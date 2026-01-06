@@ -1,11 +1,13 @@
-[gd_scene load_steps=12 format=3 uid="uid://i8b8d0bb7q82"]
+[gd_scene load_steps=14 format=3 uid="uid://i8b8d0bb7q82"]
 
 [ext_resource type="Script" uid="uid://b7ui1c1vad8q1" path="res://Player/player.gd" id="1_4flbx"]
 [ext_resource type="AudioStream" uid="uid://dsbqec0nfukv2" path="res://Player/SFX/jump_land.wav" id="2_4ntmi"]
-[ext_resource type="PackedScene" uid="uid://chjrsd2c0glov" path="res://Player/Magic/fireball.tscn" id="2_k53q1"]
+[ext_resource type="PackedScene" uid="uid://chjrsd2c0glov" path="res://Player/Magic/Fireball/fireball.tscn" id="2_k53q1"]
 [ext_resource type="AudioStream" uid="uid://dqv7ow8ov13gm" path="res://Player/SFX/jump.wav" id="3_btcbx"]
 [ext_resource type="PackedScene" uid="uid://bmihmcgb0x7mn" path="res://Player/Staff.blend" id="3_fhl08"]
 [ext_resource type="AudioStream" uid="uid://w83sc6j0atrg" path="res://Player/SFX/step.wav" id="4_gwnis"]
+[ext_resource type="AudioStream" uid="uid://cwka5ocy8ueer" path="res://Player/Magic/Levitation/levitation.wav" id="7_vtle1"]
+[ext_resource type="AudioStream" uid="uid://ce0towgbc3bc6" path="res://Player/Magic/Levitation/levitationwave.wav" id="8_od3ui"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_fj7yv"]
 
@@ -24,7 +26,6 @@ size = Vector2(0.5, 0.5)
 collision_layer = 2
 script = ExtResource("1_4flbx")
 Fireball = ExtResource("2_k53q1")
-recoil_multiplier = 9.0
 metadata/_edit_group_ = true
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -102,6 +103,16 @@ bus = &"PlayerSFX"
 
 [node name="StepSound" type="AudioStreamPlayer" parent="SFX"]
 stream = ExtResource("4_gwnis")
+bus = &"PlayerSFX"
+
+[node name="LevitationCastSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("7_vtle1")
+volume_db = -6.0
+pitch_scale = 3.0
+bus = &"PlayerSFX"
+
+[node name="LevitationSound" type="AudioStreamPlayer" parent="SFX"]
+stream = ExtResource("8_od3ui")
 bus = &"PlayerSFX"
 
 [node name="FireballTimer" type="Timer" parent="."]

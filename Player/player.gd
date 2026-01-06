@@ -6,21 +6,27 @@ extends CharacterBody3D
 @onready var jump_land_sound: AudioStreamPlayer = $SFX/JumpLandSound
 @onready var jump_sound: AudioStreamPlayer = $SFX/JumpSound
 @onready var step_sound: AudioStreamPlayer = $SFX/StepSound
+@onready var levitation_cast_sound: AudioStreamPlayer = $SFX/LevitationCastSound
+@onready var levitation_sound: AudioStreamPlayer = $SFX/LevitationSound
 @onready var fireball_timer: Timer = $FireballTimer
 @onready var staff_animator: AnimationPlayer = $Head/Staff/AnimationPlayer
 
 
 @export var Fireball: PackedScene
-@export var walk_speed: float = 10.0
-@export var run_speed: float = 20.0
-@export var jump_velocity: float = 7.0
-@export var recoil_multiplier: float = 10.0
 
+var walk_speed: float = 10.0
+var run_speed: float = 20.0
+var jump_velocity: float = 7.0
+var recoil_multiplier: float = 10.0
 var speed: float = walk_speed
 var gravity: float = 12.0
+var can_levitate: bool = false
+var max_levitation_amount: float = 10.0
+var levitation_amount: float = max_levitation_amount
+var levitation_velocity: float = 10.0
 const SENSITIVITY = 0.010
 
-enum State { IDLE, WALKING, RUNNING, FALLING }
+enum State { IDLE, WALKING, RUNNING, FALLING, LEVITATING }
 
 var current_state: State = State.IDLE
 
@@ -43,10 +49,19 @@ func _physics_process(delta: float) -> void:
 func update_state() -> void:
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var new_state: State
+	
+	if current_state != State.LEVITATING:
+		if camera_3d.fov > 75.0:
+			camera_3d.fov -= 1.0
 	if current_state == State.FALLING and is_on_floor():
+		can_levitate = false
+		levitation_amount = max_levitation_amount
 		jump_land_sound.play()
 	if not is_on_floor():
-		new_state = State.FALLING
+		if Input.is_action_pressed("jump") and levitation_amount > 0 and can_levitate:
+			new_state = State.LEVITATING
+		else:
+			new_state = State.FALLING
 	elif input_direction.length() > 0:
 		new_state = State.RUNNING if Input.is_action_pressed("run") else State.WALKING
 	else:
@@ -69,7 +84,11 @@ func transition_to(new_state: State) -> void:
 			step_sound.pitch_scale = randf_range(1.2, 1.5)
 			speed = run_speed
 		State.FALLING:
+			levitation_sound.stop()
 			step_sound.stop()
+		State.LEVITATING:
+			levitation_sound.pitch_scale = randf_range(1.5, 2.0)
+			levitation_cast_sound.play()
 
 func process_state(delta: float) -> void:
 	var input_direction = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
@@ -86,6 +105,8 @@ func process_state(delta: float) -> void:
 			if Input.is_action_just_pressed("jump"): jump()
 		State.FALLING:
 			fall(delta, direction)
+		State.LEVITATING:
+			levitate(delta)
 
 func walk(delta, direction):
 	velocity.x = lerp(velocity.x, direction.x * speed, delta * 2.0)
@@ -100,6 +121,8 @@ func jump():
 	transition_to(State.FALLING)
 
 func fall(delta, direction):
+	if Input.is_action_just_released("jump"):
+		can_levitate = true
 	velocity.y -= gravity * delta
 	velocity.x = lerp(velocity.x, direction.x * speed, delta * 2.0)
 	velocity.z = lerp(velocity.z, direction.z * speed, delta * 2.0)
@@ -120,3 +143,12 @@ func shoot():
 		fireball.linear_velocity = -projectile_marker.global_transform.basis.z * fireball.speed
 		velocity += projectile_marker.global_transform.basis.z * recoil_multiplier
 		fireball_timer.start()
+
+func levitate(delta):
+	levitation_sound.pitch_scale += 0.005
+	if camera_3d.fov < 85.0:
+		camera_3d.fov += 1.0
+	if not levitation_sound.playing:
+		levitation_sound.play()
+	levitation_amount -= 1.0 * delta
+	velocity.y = levitation_velocity

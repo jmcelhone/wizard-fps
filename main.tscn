@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://5ig2b5iak4oa"]
+[gd_scene load_steps=20 format=3 uid="uid://5ig2b5iak4oa"]
 
 [ext_resource type="Texture2D" uid="uid://cnwr37yjx4n7y" path="res://World/Dungeon/floor.png" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://i8b8d0bb7q82" path="res://Player/player.tscn" id="1_ig7tw"]
@@ -8,7 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://dmps331t0u7s2" path="res://World/Forest/Plants/tree.tscn" id="6_7mycd"]
 [ext_resource type="PackedScene" uid="uid://cc1bkc4v1xwga" path="res://World/Forest/Plants/complex_tree.tscn" id="7_5vw27"]
 [ext_resource type="Texture2D" uid="uid://bf8sbl6wvkd3q" path="res://World/Forest/floor.png" id="7_272bh"]
-[ext_resource type="PackedScene" uid="uid://ccvxyy4bhxupv" path="res://Enemies/goblin.tscn" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://cs44qhmnq777c" path="res://Objects/GoldRing/gold_ring.tscn" id="9_kek77"]
+[ext_resource type="PackedScene" uid="uid://cre7oocahhthn" path="res://Objects/GoldPlunger/gold_plunger.tscn" id="10_4c57u"]
+[ext_resource type="PackedScene" uid="uid://ccvxyy4bhxupv" path="res://Enemies/Goblin/goblin.tscn" id="11_efxa6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
 sky_horizon_color = Color(0.2152166, 0.24832791, 0.48293233, 1)
@@ -168,17 +170,17 @@ use_collision = true
 size = Vector3(15, 0.25, 8)
 material = SubResource("StandardMaterial3D_272bh")
 
-[node name="Goblin" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 6.5, -0.5, 4)
+[node name="GoldRing" parent="." instance=ExtResource("9_kek77")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -7.5, 0.5, 6.5)
 
-[node name="Goblin2" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 8.5, -0.5, 4)
+[node name="GoldPlunger" parent="." instance=ExtResource("10_4c57u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.75, -0.25, 1)
 
-[node name="Goblin3" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 10.25, -0.5, 4)
+[node name="Goblin" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5.75, -0.5, -11)
 
-[node name="Goblin4" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5, -0.5, 4)
+[node name="Goblin2" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 9.75, -0.5, -8.75)
 
-[node name="Goblin5" parent="." instance=ExtResource("9_kek77")]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 5, -0.5, 5)
+[node name="Goblin3" parent="." instance=ExtResource("11_efxa6")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.25, -0.5, -8)

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs44qhmnq777c"]
+
+[ext_resource type="PackedScene" uid="uid://b301xi81tiepu" path="res://Objects/GoldRing/GoldRing.blend" id="1_2rrjf"]
+[ext_resource type="Script" uid="uid://cgltvimrwpnxl" path="res://Objects/GoldRing/gold_ring.gd" id="2_5w65q"]
+
+[node name="GoldRing" instance=ExtResource("1_2rrjf")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
+script = ExtResource("2_5w65q")
+
+[node name="Gold Ring" parent="." index="0"]
+transform = Transform3D(1.3560392, 0, 0, 0, -5.9274356e-08, -1.3560392, 0, 1.3560392, -5.9274356e-08, 0, 2, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2"]
+light_color = Color(0.9999997, 0.8759463, 0.29361007, 1)
+light_energy = 4.0

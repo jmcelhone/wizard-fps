@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cre7oocahhthn"]
+
+[ext_resource type="PackedScene" uid="uid://by2f736o5lpxy" path="res://Objects/GoldPlunger/GoldPlunger.blend" id="1_cj30c"]
+[ext_resource type="Script" uid="uid://rk0j7wsl5ce8" path="res://Objects/GoldPlunger/gold_plunger.gd" id="2_dio6d"]
+
+[node name="GoldPlunger" instance=ExtResource("1_cj30c")]
+script = ExtResource("2_dio6d")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="2"]
+light_color = Color(0.99999994, 0.7922496, 0.4694581, 1)
+light_energy = 4.0
